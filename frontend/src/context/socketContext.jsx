@@ -1,10 +1,11 @@
+/* eslint-disable react-refresh/only-export-components */
+// Import-Anweisungen beibehalten
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuthContext } from "./authContext";
 import io from "socket.io-client";
 
 const SocketContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
 	return useContext(SocketContext);
 };
@@ -15,28 +16,35 @@ export const SocketContextProvider = ({ children }) => {
 	const { authUser } = useAuthContext();
 
 	useEffect(() => {
-		if (authUser) {
-			const socket = io("https://chatapp.onrender.com", {
+		let cleanup = () => {};
+		
+		if (authUser && authUser._id) {
+			// Verwenden der Umgebungsvariable für die URL
+			// eslint-disable-next-line no-undef
+			const newSocket = io(process.env.API_URL || "http://localhost:5000", {
 				query: {
 					userId: authUser._id,
 				},
 			});
 
-			setSocket(socket);
+			setSocket(newSocket);
 
-			// socket.on() is used to listen to the events. can be used both on client and server side
-			socket.on("getOnlineUsers", (users) => {
+			newSocket.on("getOnlineUsers", (users) => {
 				setOnlineUsers(users);
 			});
 
-			return () => socket.close();
-		} else {
-			if (socket) {
-				socket.close();
-				setSocket(null);
-			}
+			cleanup = () => newSocket.close();
 		}
-	}, [authUser, socket]);
 
-	return <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>;
+		return cleanup;
+	}, [authUser]);
+
+	return (
+		<SocketContext.Provider value={{ socket, onlineUsers }}>
+			{children}
+		</SocketContext.Provider>
+	);
 };
+
+
+

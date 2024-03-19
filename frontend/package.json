@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "chat-app-yt": "file:..",
+    "chatapp": "file:..",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -36,4 +37,3 @@
     "vite": "^5.1.4"
   }
 }
-
