@@ -1,14 +1,25 @@
+# 💬 mern-chat-app
 
-# 💬 MERN Chat App
-
-A production-ready chat app built with MongoDB, Express, React, Node.js and Socket.io.
+A simple JavaScript real-time chat app with WebSockets.
 
 ## 🚀 Overview
-- JWT Authentication
-- Real-time chat
-- MongoDB storage
-- Responsive React UI
+- Nickname entry
+- Single global chat room
+- Real-time messaging with Socket.io
+- Session storage of messages
 
-## ⚙️ Run
-Docker: `docker-compose up --build`
-Manual: `npm install && npm run dev`
+## 📦 Tech Stack
+- Node.js, Express, Socket.io, HTML/CSS/JavaScript
+
+## ⚙️ Installation & Running
+```
+git clone https://github.com/YourUser/chat-app-inBuild.git
+cd chat-app-inBuild/server
+npm install
+npm start
+```
+Open `client/index.html` in a browser.
+
+## 📄 License
+MIT © Kilian Maier
+
